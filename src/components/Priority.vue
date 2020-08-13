@@ -2,42 +2,26 @@
   <div class="priority">
     <p>Please select the priority level:</p>
     <div class="radio-container">
-      <input
-        type="radio"
-        name="priority"
-        v-model="note.priority"
-        value="usual"
-      />
+      <input type="radio" name="priority" v-model="note.priority" value="usual" />
       <label>Usual</label>
 
-      <input
-        type="radio"
-        name="priority"
-        value="important"
-        v-model="note.priority"
-      />
-      <label style='text-shadow: 1px 1px 15px yellow'>Important</label>
+      <input type="radio" name="priority" value="important" v-model="note.priority" />
+      <label style="text-shadow: 1px 1px 15px yellow">Important</label>
 
-      <input
-        type="radio"
-        name="priority"
-        value="critical"
-        v-model="note.priority"
-      />
-      <label style='text-shadow: 1px 1px 15px red'>Critical</label>
+      <input type="radio" name="priority" value="critical" v-model="note.priority" />
+      <label style="text-shadow: 1px 1px 15px red">Critical</label>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: {
-    note: {
-      type: Object,
-      required: true
-    }
+  computed: {
+    note() {
+        return this.$store.getters.getNote;
+      }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

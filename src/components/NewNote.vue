@@ -3,7 +3,7 @@
   <div>
   <div class="new-note">
     <label>Title</label>
-    <input type="text" v-model="note.title" />
+    <input type="text" v-model="note.title"/>
     <label>Description</label>
     <textarea v-model="note.descr"></textarea>
     <priority :note="note"/>
@@ -19,15 +19,14 @@ export default {
   components: {
     priority
   },
-  props: {
-    note: {
-      type: Object,
-      required: true
-    }
+  computed: {
+    note() {
+        return this.$store.getters.getNote;
+      },
   },
   methods: {
     addNote() {
-      this.$emit('addNote', this.note)
+      this.$store.dispatch('addNote')
     },
   }
 };

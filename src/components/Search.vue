@@ -14,24 +14,21 @@
 <script>
 export default {
   props: {
-    value: {
-      type: String,
-      required: true
-    },
     placeholder: {
       type: String,
       default: 'Search'
     }
   },
-  data () {
-    return { search: this.value }
-  },
-  watch: {
-    search (val) {
-      // console.log(val)
-      this.$emit('search', val);
+  computed: {
+    search: {
+      get() {
+      return this.$store.getters.getSearch;
+      },
+      set(val) {
+        this.$store.dispatch('changeSearch', val);
+      }
     }
-  }
+  },
 }
 </script>
 

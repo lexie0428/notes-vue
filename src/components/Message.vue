@@ -6,10 +6,9 @@
 
 <script>
 export default {
-  props: {
-    message: {
-      type: String,
-      required: true
+  computed: {
+    message() {
+      return this.$store.getters.getMessage;
     }
   }
 }

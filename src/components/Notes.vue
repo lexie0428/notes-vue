@@ -46,19 +46,27 @@ export default {
       newDescription: '',
     };
   },
-  props: {
-    notes: {
-      type: Array,
-      required: true,
+  computed: {
+    notes() {
+      let array = this.$store.getters.getNotes;
+      let search = this.$store.getters.getSearch;
+      if (!search) return array;
+      search = search.trim().toLowerCase();
+      array = array.filter(function(item) {
+        if (item.title.toLowerCase().indexOf(search) !== -1) {
+          return item;
+        }
+      });
+      return array;;
     },
-    grid: {
-      type: Boolean,
-      required: true,
-    },
+    grid() {
+      return this.$store.getters.getGrid;
+    }
   },
+
   methods: {
     removeNote(index) {
-      this.$emit('remove', index);
+      this.$store.dispatch("removeNote", index);
     },
     getInput(id) {
       const note = document.getElementById(`${id}`);
@@ -69,7 +77,7 @@ export default {
     },
     resetTitle(id, change) {
       if (change) {
-        this.$emit('changeTitle', id, this.newTitle);
+        this.$store.dispatch("changeTitle", {id, newTitle: this.newTitle});
       }
       const note = document.getElementById(`${id}`);
       const title = note.getElementsByClassName('note-header')[0];
@@ -87,7 +95,7 @@ export default {
     },
     resetDescr(id, change) {
       if (change) {
-        this.$emit('changeDescr', id, this.newDescription);
+        this.$store.dispatch("changeDescr", {id, newDescr: this.newDescription});
       }
       const note = document.getElementById(`${id}`);
       const descr = note.getElementsByClassName('note-descr')[0];
